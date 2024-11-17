@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Go on a Date with Me Lang?</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #fad0c4, #971115);
+            color: #333;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        h1 {
+            font-size: 2.5rem;
+            color: #ffffff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        p {
+            font-size: 1.2rem;
+            color: #ffffff;
+            margin: 1rem 0;
+        }
+        .buttons {
+            margin-top: 2rem;
+        }
+        .btn {
+            padding: 1rem 2rem;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s ease, background-color 0.3s ease;
+        }
+        .yay{
+            font-size: 1.2rem;
+
+        }
+        .btn-yes {
+            background-color: #6bcf63;
+            color: white;
+            margin: 0 1rem;
+        }
+        .btn-no {
+            background-color: #e74c3c;
+            color: white;
+            margin: 0 1rem;
+        }
+        .btn:hover {
+            transform: scale(1.1);
+        }
+        .btn-no:hover {
+            background-color: #c0392b;
+        }
+        .btn-yes:hover {
+            background-color: #5ab953;
+        }
+        .hidden {
+            display: none;
+       
+        }
+        /* .heart {
+            font-size: 5rem;
+            color: white;
+            animation: pulse 1s infinite;
+        } */
+         
+        #date-picker {
+            margin-top: 1rem;
+            font-size: 1.1rem;
+            padding: 0.5rem;
+            border: 2px solid #6bcf63;
+            border-radius: 5px;
+        }
+        .submit-date {
+            margin-top: 1rem;
+            padding: 0.8rem 1.5rem;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+        .submit-date:hover {
+            background-color: #2980b9;
+        }
+        .confirmation {
+            margin-top: 1.5rem;
+            font-size: 1.2rem;
+            color: #ffffff;
+        }
+        .agenda {
+            background-color: #ffffff;
+            color: #333;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-top: 2rem;
+            text-align: left;
+            width: 80%;
+            max-width: 600px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .agenda h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .agenda ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .agenda ul li {
+            font-size: 1.1rem;
+            margin: 0.5rem 0;
+        }
+        /* @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        } */
+    </style>
+</head>
+<body>
+    <div class="greet">
+        <h1>Hey Rose! 💕</h1>
+        <p>Will you go on a date with me? 💐</p>
+
+    </div>
+    
+    <div class="buttons">
+        <button class="btn btn-yes" onclick="sayYes()">Yes</button>
+        <button class="btn btn-no" onclick="sayNo()">No</button>
+    </div>
+    <!-- <div id="message" class="hidden"> -->
+        
+    <div id="yesclicked" class="hidden">
+        <!-- <p class="heart">❤️</p> -->
+            <div id="subt">
+                <h2 style="color: white;  font-weight: bold;">Yay! I can't wait to spend time with you. 🥰</h2 style="color: white;">
+                <p>Please pick a date:</p>
+                <input type="date" id="date-picker" value="John" />
+                <button class="submit-date" onclick="confirmDate()">Submit</button>
+            </div>
+       
+
+             <h2 id="confirmation-message" class="confirmation hidden"></h2>
+
+    </div>
+
+    <!-- <div id="message" class="hidden">
+    </div> -->
+
+    
+    <div id="agenda" class="agenda hidden">
+        <h3>Our Date Agenda: </h3>
+        <ul>
+            <li>🌅 19:00 - Dinner at our favorite restaurant.</li>
+            <li>🎥 20:30 - Movie night with popcorn.</li>
+            <li>🌙 22:30 - Stargazing under the stars.</li>
+        </ul>
+    </div>
+    <div id="tease" class="hidden">
+        <p>Please answer again 😜</p>
+        <button class="btn btn-yes" onclick="sayYes()">Yes</button>
+        <button class="btn btn-no" onclick="sayNo()">No</button>
+        <!-- <p>Click again to change your mind! 😜</p> -->
+    </div>
+
+    <script>
+        // Set today's date as the minimum selectable date for the date picker
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('date-picker').setAttribute('min', today);
+
+        function sayYes() {
+            
+            document.querySelector('h1').remove();
+            document.querySelector('p').remove();
+            document.getElementById('tease').classList.add('hidden');
+            document.querySelector('.buttons').classList.add('hidden');
+            document.getElementById('yesclicked').classList.remove('hidden');
+           
+            
+
+        }
+        
+        function sayNo() {
+            document.querySelector('.buttons').classList.add('hidden');
+            document.getElementById('tease').classList.remove('hidden');
+        
+        }
+
+        function confirmDate() {
+            const date = document.getElementById('date-picker').value;
+            
+            if (date) {
+                document.getElementById('subt').classList.add('hidden');
+                const formattedDate = formatDate(date);
+                document.getElementById('confirmation-message').textContent = 
+                    `Great! Our date is set for ${formattedDate}. I can't wait! 🥰🌹`;
+                document.getElementById('confirmation-message').classList.remove('hidden');
+                document.getElementById('agenda').classList.remove('hidden');
+            
+
+               
+            } else {
+                alert('Please select a date!');
+            }
+        }
+
+        // Function to format date into "Month Day, Year" format
+        function formatDate(dateString) {
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', options);
+        }
+    </script>
+</body>
+</html>
